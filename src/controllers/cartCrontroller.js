@@ -1,17 +1,21 @@
-const errorDictionary = require("../services/errors/enums")
-const cart = require("../data/productsData")
+const { createError } = require('../services/errors/errorHandler');
+const cart = require('../data/productsData');
 
 // Función para agregar un producto al carrito
 const addToCart = (product) => {
-  if (!product || typeof product !== "object") {
-    throw new Error(errorDictionary.CART_INVALID_PRODUCT);
-  }
-  
-  cart.push(product)
+  try {
+    if (!product || typeof product !== 'object') {
+      throw createError('CART_INVALID_PRODUCT');
+    }
 
-  return cart;
+    cart.push(product);
+
+    return cart;
+  } catch (error) {
+    throw error;
+  }
 };
 
-module.exports ={
-  addToCart
-}
+module.exports = {
+  addToCart,
+};
